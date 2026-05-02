@@ -4,53 +4,93 @@ import type { ParsedData, SheetData, ColumnStats, DashboardMetrics } from '@/typ
 export function parseFile(file: File): Promise<SheetData[]> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
+
     reader.onload = (e) => {
       try {
         const data = e.target?.result
-        const workbook = XLSX.read(data, { type: 'binary', cellDates: true })
+        if (!data) throw new Error('Empty file')
+
+        const workbook = XLSX.read(data, {
+          type: 'binary',
+          cellDates: true,
+        })
+
         const sheets: SheetData[] = []
 
         workbook.SheetNames.forEach((name) => {
           const ws = workbook.Sheets[name]
-          const jsonData = XLSX.utils.sheet_to_json(ws, { defval: null, raw: false }) as Record<string, unknown>[]
-          if (jsonData.length === 0) return
+
+          const jsonData = XLSX.utils.sheet_to_json(ws, {
+            defval: null,
+            raw: false,
+          }) as Record<string, unknown>[]
+
+          if (!jsonData.length) return
+
           const headers = Object.keys(jsonData[0])
+
           sheets.push({
             name,
-            data: { headers, rows: jsonData, sheetName: name, totalRows: jsonData.length },
+            data: {
+              headers,
+              rows: jsonData,
+              sheetName: name,
+              totalRows: jsonData.length,
+            },
           })
         })
 
-        resolve(sheets.length > 0 ? sheets : [])
-      } catch (err) {
-        reject(new Error('Failed to parse file. Ensure it is a valid Excel or CSV file.'))
+        resolve(sheets)
+      } catch {
+        reject(new Error('Invalid Excel/CSV file'))
       }
     }
-    reader.onerror = () => reject(new Error('Failed to read file.'))
+
+    reader.onerror = () => reject(new Error('File reading failed'))
+
     reader.readAsBinaryString(file)
   })
 }
 
 export function detectColumnType(values: unknown[]): ColumnStats['type'] {
   const nonNull = values.filter((v) => v !== null && v !== undefined && v !== '')
-  if (nonNull.length === 0) return 'string'
+
+  if (!nonNull.length) return 'string'
+
   const numCount = nonNull.filter((v) => !isNaN(Number(v))).length
   if (numCount / nonNull.length > 0.8) return 'number'
+
   const dateCount = nonNull.filter((v) => !isNaN(Date.parse(String(v)))).length
   if (dateCount / nonNull.length > 0.8) return 'date'
+
   return 'string'
 }
 
 export function analyzeData(data: ParsedData): DashboardMetrics {
   const { headers, rows } = data
+
   const columnStats: ColumnStats[] = headers.map((col) => {
     const values = rows.map((r) => r[col])
     const type = detectColumnType(values)
+
     const nonNull = values.filter((v) => v !== null && v !== undefined && v !== '')
     const nullCount = values.length - nonNull.length
-    
+
+    // 🔢 Numeric columns
     if (type === 'number') {
       const nums = nonNull.map(Number).filter((n) => !isNaN(n))
+
+      if (!nums.length) {
+        return {
+          name: col,
+          type,
+          uniqueCount: 0,
+          nullCount,
+        }
+      }
+
+      const sum = nums.reduce((a, b) => a + b, 0)
+
       return {
         name: col,
         type,
@@ -58,19 +98,31 @@ export function analyzeData(data: ParsedData): DashboardMetrics {
         nullCount,
         min: Math.min(...nums),
         max: Math.max(...nums),
-        sum: nums.reduce((a, b) => a + b, 0),
-        avg: nums.reduce((a, b) => a + b, 0) / nums.length,
+        sum,
+        avg: sum / nums.length,
       }
     }
 
+    // 🔤 Categorical / string
     const freq: Record<string, number> = {}
-    nonNull.forEach((v) => { const k = String(v); freq[k] = (freq[k] || 0) + 1 })
+
+    nonNull.forEach((v) => {
+      const key = String(v)
+      freq[key] = (freq[key] || 0) + 1
+    })
+
     const topValues = Object.entries(freq)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 10)
       .map(([value, count]) => ({ value, count }))
 
-    return { name: col, type, uniqueCount: Object.keys(freq).size, nullCount, topValues }
+    return {
+      name: col,
+      type,
+      uniqueCount: Object.keys(freq).length, // ✅ FIXED
+      nullCount,
+      topValues,
+    }
   })
 
   return {
@@ -89,15 +141,21 @@ export function generateChartData(
   limit = 20
 ) {
   const freq: Record<string, number> = {}
+
   rows.forEach((r) => {
     const x = String(r[xKey] ?? 'Unknown')
     const y = Number(r[yKey] ?? 0)
+
     freq[x] = (freq[x] || 0) + (isNaN(y) ? 1 : y)
   })
+
   return Object.entries(freq)
     .sort((a, b) => b[1] - a[1])
     .slice(0, limit)
-    .map(([name, value]) => ({ name, value: Math.round(value * 100) / 100 }))
+    .map(([name, value]) => ({
+      name,
+      value: Math.round(value * 100) / 100,
+    }))
 }
 
 export function generateCategoryData(
@@ -106,7 +164,12 @@ export function generateCategoryData(
   limit = 8
 ) {
   const freq: Record<string, number> = {}
-  rows.forEach((r) => { const k = String(r[colKey] ?? 'Unknown'); freq[k] = (freq[k] || 0) + 1 })
+
+  rows.forEach((r) => {
+    const key = String(r[colKey] ?? 'Unknown')
+    freq[key] = (freq[key] || 0) + 1
+  })
+
   return Object.entries(freq)
     .sort((a, b) => b[1] - a[1])
     .slice(0, limit)
