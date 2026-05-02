@@ -1,0 +1,36 @@
+import type { SheetData } from '@/types'
+
+export const DEMO_DATA: SheetData = {
+  name: 'Sales Data',
+  data: {
+    sheetName: 'Sales Data',
+    totalRows: 24,
+    headers: ['Month', 'Region', 'Product', 'Revenue', 'Units', 'Cost', 'Profit'],
+    rows: [
+      { Month: 'Jan 2024', Region: 'North', Product: 'Widget A', Revenue: 45200, Units: 180, Cost: 28000, Profit: 17200 },
+      { Month: 'Jan 2024', Region: 'South', Product: 'Widget B', Revenue: 38600, Units: 154, Cost: 22000, Profit: 16600 },
+      { Month: 'Jan 2024', Region: 'East', Product: 'Widget A', Revenue: 52100, Units: 208, Cost: 31000, Profit: 21100 },
+      { Month: 'Feb 2024', Region: 'North', Product: 'Widget B', Revenue: 49800, Units: 199, Cost: 30000, Profit: 19800 },
+      { Month: 'Feb 2024', Region: 'South', Product: 'Widget C', Revenue: 61200, Units: 245, Cost: 38000, Profit: 23200 },
+      { Month: 'Feb 2024', Region: 'East', Product: 'Widget A', Revenue: 55400, Units: 221, Cost: 34000, Profit: 21400 },
+      { Month: 'Mar 2024', Region: 'North', Product: 'Widget C', Revenue: 67300, Units: 269, Cost: 42000, Profit: 25300 },
+      { Month: 'Mar 2024', Region: 'South', Product: 'Widget A', Revenue: 43500, Units: 174, Cost: 26000, Profit: 17500 },
+      { Month: 'Mar 2024', Region: 'East', Product: 'Widget B', Revenue: 58900, Units: 235, Cost: 36000, Profit: 22900 },
+      { Month: 'Apr 2024', Region: 'North', Product: 'Widget A', Revenue: 72100, Units: 288, Cost: 45000, Profit: 27100 },
+      { Month: 'Apr 2024', Region: 'South', Product: 'Widget B', Revenue: 64800, Units: 259, Cost: 40000, Profit: 24800 },
+      { Month: 'Apr 2024', Region: 'East', Product: 'Widget C', Revenue: 79500, Units: 318, Cost: 49000, Profit: 30500 },
+      { Month: 'May 2024', Region: 'North', Product: 'Widget B', Revenue: 68200, Units: 272, Cost: 42000, Profit: 26200 },
+      { Month: 'May 2024', Region: 'South', Product: 'Widget C', Revenue: 83600, Units: 334, Cost: 52000, Profit: 31600 },
+      { Month: 'May 2024', Region: 'East', Product: 'Widget A', Revenue: 59300, Units: 237, Cost: 36000, Profit: 23300 },
+      { Month: 'Jun 2024', Region: 'North', Product: 'Widget C', Revenue: 91200, Units: 364, Cost: 57000, Profit: 34200 },
+      { Month: 'Jun 2024', Region: 'South', Product: 'Widget A', Revenue: 76400, Units: 305, Cost: 47000, Profit: 29400 },
+      { Month: 'Jun 2024', Region: 'East', Product: 'Widget B', Revenue: 84700, Units: 338, Cost: 52000, Profit: 32700 },
+      { Month: 'Jul 2024', Region: 'North', Product: 'Widget A', Revenue: 88900, Units: 355, Cost: 55000, Profit: 33900 },
+      { Month: 'Jul 2024', Region: 'South', Product: 'Widget B', Revenue: 71300, Units: 285, Cost: 44000, Profit: 27300 },
+      { Month: 'Jul 2024', Region: 'East', Product: 'Widget C', Revenue: 95600, Units: 382, Cost: 59000, Profit: 36600 },
+      { Month: 'Aug 2024', Region: 'North', Product: 'Widget B', Revenue: 82400, Units: 329, Cost: 51000, Profit: 31400 },
+      { Month: 'Aug 2024', Region: 'South', Product: 'Widget C', Revenue: 103200, Units: 412, Cost: 64000, Profit: 39200 },
+      { Month: 'Aug 2024', Region: 'East', Product: 'Widget A', Revenue: 77800, Units: 311, Cost: 48000, Profit: 29800 },
+    ],
+  },
+}
