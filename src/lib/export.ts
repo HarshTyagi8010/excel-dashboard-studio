@@ -49,12 +49,46 @@ export async function exportToPPTX(
       fontSize: 28, bold: true, color: 'f1f5f9',
     })
     metrics.slice(0, 4).forEach((m, i) => {
-      const x = `${5 + (i % 2) * 48}%`
-      const y = `${25 + Math.floor(i / 2) * 35}%`
-      slide2.addShape(prs.ShapeType.rect, { x, y, w: '44%', h: '28%', fill: { color: '1e293b' }, line: { color: '334155', width: 1 } })
-      slide2.addText(m.value, { x, y, w: '44%', h: '16%', fontSize: 32, bold: true, color: '60a5fa', align: 'center', valign: 'bottom' })
-      slide2.addText(m.label, { x, y: `${parseFloat(y) + 16}%`, w: '44%', h: '12%', fontSize: 14, color: '94a3b8', align: 'center', valign: 'top' })
-    })
+      const slideWidth = 10
+const slideHeight = 5.625
+
+data.forEach((m, i) => {
+  // Convert grid layout into inch-based positions
+  const x = 0.5 + (i % 2) * 5      // 2 columns
+  const y = 1.5 + Math.floor(i / 2) * 3  // rows
+
+  slide2.addShape(prs.ShapeType.rect, {
+    x,
+    y,
+    w: 4.5,
+    h: 2.5,
+    fill: { color: '1e293b' },
+    line: { color: '334155', width: 1 }
+  })
+
+  slide2.addText(m.value, {
+    x,
+    y,
+    w: 4.5,
+    h: 1.4,
+    fontSize: 32,
+    bold: true,
+    color: '60a5fa',
+    align: 'center',
+    valign: 'bottom'
+  })
+
+  slide2.addText(m.label, {
+    x,
+    y: y + 1.4, // offset instead of %
+    w: 4.5,
+    h: 1,
+    fontSize: 14,
+    color: '94a3b8',
+    align: 'center',
+    valign: 'top'
+  })
+})
   }
 
   // Slides 3+ - Chart Data Tables
