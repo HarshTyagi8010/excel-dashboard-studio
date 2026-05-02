@@ -1,50 +1,99 @@
-# Excel Dashboard Studio
+# 🚀 Excel Dashboard Studio
 
-A production-ready web app that lets users upload Excel/CSV files and instantly generates interactive analytics dashboards with charts, KPI cards, data tables, and export options.
+> Transform Excel & CSV files into interactive analytics dashboards in seconds
 
-## Features
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-Production--Ready-success)
 
-- 📊 **Auto-generated charts** — bar, line, area, and pie charts based on detected data types
-- 📋 **KPI cards** — automatic aggregation of key metrics
-- 🔍 **Searchable data table** — with pagination and column sorting
-- 📄 **Export to PDF** — captures the full dashboard via html2canvas + jsPDF
-- 📑 **Export to PPTX** — multi-slide PowerPoint via pptxgenjs
-- 🗂️ **Multi-sheet support** — navigate between Excel sheets
-- 🎨 **Demo mode** — works without uploading a file
-- 🔒 **Client-side only** — all file parsing happens in the browser
+---
 
-## Tech Stack
+## 🌐 Live Demo
 
-- **Framework**: Next.js 14 (App Router) + TypeScript
-- **Styling**: Tailwind CSS
-- **Charts**: Recharts
-- **Parsing**: SheetJS (xlsx)
-- **PDF**: jsPDF + html2canvas
-- **PPTX**: pptxgenjs
+👉 https://your-demo-link.vercel.app *(add after deployment)*
 
-## Local Setup
+---
+
+## 📸 Preview
+
+![Dashboard Preview](./public/demo.png)
+
+---
+
+## ✨ Features
+
+* 📊 **Auto-generated charts** — bar, line, area, pie based on smart data detection
+* 📋 **KPI cards** — automatic aggregation of key business metrics
+* 🔍 **Advanced data table** — search, pagination, sorting
+* 📄 **Export to PDF** — full dashboard capture via html2canvas + jsPDF
+* 📑 **Export to PPTX** — multi-slide presentation via pptxgenjs
+* 🗂️ **Multi-sheet support** — navigate Excel sheets easily
+* 🎨 **Demo mode** — explore without uploading files
+* 🔒 **Client-side only** — no data leaves the browser
+
+---
+
+## 🛠 Tech Stack
+
+| Layer     | Technology                    |
+| --------- | ----------------------------- |
+| Framework | Next.js (App Router)          |
+| Language  | TypeScript                    |
+| Styling   | Tailwind CSS                  |
+| Charts    | Recharts                      |
+| Parsing   | SheetJS (xlsx)                |
+| Export    | jsPDF, html2canvas, pptxgenjs |
+
+---
+
+## 🚀 Getting Started
 
 ```bash
-# 1. Install dependencies
+# Clone repository
+git clone https://github.com/YOUR_USERNAME/excel-dashboard-studio.git
+
+# Navigate
+cd excel-dashboard-studio
+
+# Install dependencies
 npm install
 
-# 2. Run development server
+# Start dev server
 npm run dev
-
-# 3. Open http://localhost:3000
 ```
 
-## Build & Deploy
+👉 Open: http://localhost:3000
+
+---
+
+## 🐳 Docker Setup
 
 ```bash
-# Build for production
+# Build Docker image
+docker build -t excel-dashboard .
+
+# Run container
+docker run -p 3000:3000 excel-dashboard
+```
+
+---
+
+## 📦 Build & Production
+
+```bash
+# Build app
 npm run build
 
 # Start production server
 npm start
 ```
 
-### Deploy to Vercel (recommended)
+---
+
+## ☁️ Deployment
+
+### Deploy to Vercel (Recommended)
 
 ```bash
 npx vercel
@@ -54,36 +103,55 @@ npx vercel
 
 ```bash
 npm run build
-# Upload the .next folder or connect your repo to Netlify
 ```
 
-## Environment Variables
+---
 
-No environment variables are required. See `.env.example` for reference.
-
-## Project Structure
+## 📂 Project Structure
 
 ```
 src/
 ├── app/
-│   ├── globals.css       # Global styles + design tokens
-│   ├── layout.tsx        # Root layout
-│   └── page.tsx          # Main page (landing + dashboard)
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
 ├── components/
 │   ├── charts/
-│   │   └── ChartCard.tsx # Recharts wrapper
 │   ├── layout/
-│   │   ├── Navbar.tsx    # Top navigation
-│   │   └── Dashboard.tsx # Dashboard view
 │   └── ui/
-│       ├── Dropzone.tsx  # File upload dropzone
-│       ├── KPICard.tsx   # KPI metric card
-│       └── DataTable.tsx # Paginated data table
 ├── lib/
-│   ├── demo-data.ts      # Sample data for demo mode
-│   ├── export.ts         # PDF + PPTX export utilities
-│   ├── parser.ts         # Excel/CSV parsing + analysis
-│   └── utils.ts          # Helper functions
+│   ├── parser.ts
+│   ├── export.ts
+│   └── utils.ts
 └── types/
-    └── index.ts          # TypeScript types
 ```
+
+---
+
+## ⚠️ Notes
+
+* Some npm audit warnings may appear (common in JS ecosystem)
+* For production, use optimized build (`npm run build`)
+* Large Excel files may impact performance in browser
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+**Harsh Tyagi**
+
+---
+
+## ⭐ Support
+
+If you found this project helpful:
+
+👉 Star this repo
+👉 Share it with others
+👉 Use it in your portfolio
