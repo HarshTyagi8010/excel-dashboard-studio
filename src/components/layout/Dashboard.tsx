@@ -99,7 +99,7 @@ export function Dashboard({ data, fileName }: DashboardProps) {
         label: `Total ${col.name}`,
         value: formatNumber(col.sum ?? 0),
         icon: i === 0 ? TrendingUp : Activity,
-        color: i === 0 ? 'green' as const : 'orange' as const,
+        color: i === 0 ? 'blue' as const : 'purple' as const,
       })
     })
     return cards
